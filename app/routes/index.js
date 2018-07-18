@@ -17,6 +17,7 @@ module.exports = function routes(app, passport) {
         indexController  = require('../controllers/indexController'),
         loginController  = require('../controllers/loginController'),
         secureController = require('../controllers/secureController');
+        goodsController = require('../controllers/goodsController');
 
     var router = new Router();
 
@@ -25,7 +26,7 @@ module.exports = function routes(app, passport) {
         .get('/users',     indexController.list)
         .get('/users/:id', indexController.getId)
         .get('/goods/:id', goodsController.get) /* 200 - all ok, 404  not this food*/
-        .post('/goods', goodsController.post) /* 201 can add foods, 400 - goods can`t add*/
+        .post('/goods',    goodsController.post) /* 201 can add foods, 400 - goods can`t add*/
         .del('/goods/:id', goodsController.delete) /* 204 - can dell food, 400 - can`t dell*/
         .get('/login',     loginController.login)
         .post('/login',
