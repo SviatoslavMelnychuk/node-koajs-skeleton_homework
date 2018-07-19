@@ -11,12 +11,13 @@ module.exports = function routes(app, passport) {
         co   = require('co'),
         Router = require('koa-router'),
         authed = require('../helpers/authedMiddleware'),
+        KoaBody = require('koa-body'),
         
         
     // Controllers
         indexController  = require('../controllers/indexController'),
         loginController  = require('../controllers/loginController'),
-        secureController = require('../controllers/secureController');
+        secureController = require('../controllers/secureController'),
         goodsController = require('../controllers/goodsController');
 
     var router = new Router();
@@ -25,9 +26,9 @@ module.exports = function routes(app, passport) {
         .get('/',          indexController.index)
         .get('/users',     indexController.list)
         .get('/users/:id', indexController.getId)
-        .get('/goods/:id', goodsController.get) /* 200 - all ok, 404  not this food*/
-        .post('/goods',    goodsController.post) /* 201 can add foods, 400 - goods can`t add*/
-        .del('/goods/:id', goodsController.delete) /* 204 - can dell food, 400 - can`t dell*/
+        .get('/goods/:id', goodsController.getGoodsId) /* 200 - all ok, 404  not this food*/
+        .post('/goods',    KoaBody(), goodsController.postGoods) /* 201 can add foods, 400 - goods can`t add*/
+        .del('/goods/:id', goodsController.deleteGoods) /* 204 - can dell food, 400 - can`t dell*/
         .get('/login',     loginController.login)
         .post('/login',
             passport.authenticate('local', {
